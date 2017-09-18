@@ -8,7 +8,18 @@ process.stdin.on('data', function (data, done) {
     process.stdout.write(output);
     process.stdout.write('\nprompt > ');
   }  
-var cmd = data.toString().trim().split(/\s*\|\s*/g); // remove the newline, any amount of whitespace, pipe, any amount of whitespace
-var cmds = cmd[0].split(' ')  
-commands[cmds[0]](cmds.slice(1), done);
+var pipeArray = data.toString().trim().split(/\s*\|\s*/g); // remove the newline, any amount of whitespace, pipe, any amount of whitespace
+var cmd = pipeArray[0].split(' ')
+if(pipeArray.length == 1){
+    commands[cmd[0]](cmd.slice(1), done);
+}  
+else{
+    commands[cmd[1]](cmd[0], done);
+}
 });
+
+// cat bash.js | head
+// pipeArray = ["cat bash.js", "head"];
+// cmd = ["cat", "bash.js"]
+// commands[bash.js](cat, done);
+// commands[head](cat bash.js, done);

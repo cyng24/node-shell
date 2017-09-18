@@ -9,7 +9,7 @@ module.exports = {
         var nowDate = new Date();
         done(nowDate.toString());
     },
-    ls: function(filename, done){
+    ls: function(stdin, filename, done){
         var result = "";
         fs.readdir('.', function(err, files) {
             if (err) throw err;   
@@ -28,7 +28,8 @@ module.exports = {
             done(contents.toString());
         })
     },
-    head: function(filename, done){
+    head: function(stdin, filename, done){
+        if(stdin){done(stdin)};
         fs.readFile(filename.toString(), function(err, contents){
             if (err) throw err;
             done(contents.toString().split('\n').slice(0,5).join('\n'));
